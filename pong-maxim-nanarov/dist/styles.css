@@ -4,6 +4,6 @@ body {
 }
 
 canvas {
-  background: black;
+  background: blue;
   border: 6px dashed #20C20E;
 }
