@@ -134,10 +134,10 @@ function draw() {
       ball.y + ball.vy < 0) {
     ball.vy = -ball.vy;
   }
-  if(ball.vx + ball.x < 120 && ball.vy + ball.y < player1.hei && ball.vy +ball.y > (player1.hei - 60)){
+  if(ball.vx + ball.x < 120 && ball.vy + ball.y < player1.hei + 1 && ball.vy +ball.y < (player1.hei - 61)){
     ball.vx = -ball.vx; 
     ball.vy = -ball.vy;
-  }if(ball.vx + ball.x < 1380 && ball.vy + ball.y < player2.hei && ball.vy +ball.y > (player2.hei - 60)){
+  }if(ball.vx + ball.x > 1400 && ball.vy + ball.y > player2.hei + 1 && ball.vy +ball.y < (player2.hei - 61)){
     ball.vx = -ball.vx; 
     ball.vy = -ball.vy;
   }
