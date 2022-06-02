@@ -36,13 +36,14 @@ class Rectangle{
   id:string;
   wid:number;
   hei:number;
-
+  points:number;
     constructor(x:number,y:number, id:string,wid:number,hei:number){
       this.x = x;
       this.y =y; 
       this.id = id;
       this.wid = wid;
       this.hei = hei;
+      this.points = 0;
     }
 
     update(x:number, y:number){
@@ -108,15 +109,15 @@ async function MOVE2(e:any) {
 var raf:any;
 
 var ball = {
-  x: 100,
-  y: 100,
-  vx: 5,
-  vy: 2,
-  radius: 25,
+  x: canvas.width/2,
+  y: canvas.height/2,
+  vx: 3,
+  vy: 1,
+  radius: 10,
   color: 'black',
   draw: function() {
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+    ctx.arc(this.x, this.y, this.radius, 90, Math.PI * 2, true);
     ctx.closePath();
     ctx.fillStyle = this.color;
     ctx.fill();
@@ -124,7 +125,7 @@ var ball = {
 };
 
 function draw() {
-  ctx.clearRect(0,0, canvas.width, canvas.height);
+  startFromScratch();
   ball.draw();
   ball.x += ball.vx;
   ball.y += ball.vy;
@@ -133,9 +134,23 @@ function draw() {
       ball.y + ball.vy < 0) {
     ball.vy = -ball.vy;
   }
-  if (ball.x + ball.vx > canvas.width ||
-      ball.x + ball.vx < 0) {
-    ball.vx = -ball.vx;
+  if(ball.vx + ball.x < 120 && ball.vy + ball.y < player1.hei && ball.vy +ball.y > (player1.hei - 60)){
+    ball.vx = -ball.vx; 
+    ball.vy = -ball.vy;
+  }if(ball.vx + ball.x < 1380 && ball.vy + ball.y < player2.hei && ball.vy +ball.y > (player2.hei - 60)){
+    ball.vx = -ball.vx; 
+    ball.vy = -ball.vy;
+  }
+
+
+  if (ball.x + ball.vx > canvas.width){
+    player1.points++;
+    startFromScratch();
+  } 
+      if(ball.x + ball.vx < 0) {
+      player2.points++;
+    // ball.vx = -ball.vx;
+    startFromScratch();
   }
 
   raf = window.requestAnimationFrame(draw);
@@ -150,3 +165,12 @@ canvas.addEventListener('mouseout', () => {
 });
 
 ball.draw();
+
+
+function startFromScratch(){
+  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  drewDashLine();
+  drewRect(player1.x, player1.y, player1.wid, player1.hei);
+  drewRect(player2.x, player2.y, player2.wid, player2.hei);
+  ball.draw();
+}
